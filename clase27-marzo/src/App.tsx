@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router'
-import FSPLASH from './splash'
 import FHOME from './home'
 import FFAVORITOS from './favoritos'
-import FORIGINAL from './original'
 import FINFORMATIVA from './informativa'
 import FUSUARIO from './usuario'
 import "./App.css"
+import FEQUIPO from './EQUIPO'
 
 function App() {
   return (
@@ -19,10 +18,9 @@ function App() {
           <Link to="/usuario">Usuario</Link>
         </nav>
         <Routes>
-          <Route path="/splash" element={<FSPLASH />} />
           <Route path="/" element={<FHOME />} />
+          <Route path="/equipo/:equipo" element={<FEQUIPO />} />
           <Route path="/favoritos" element={<FFAVORITOS />} />
-          <Route path="/original" element={<FORIGINAL />} />
           <Route path="/informativa" element={<FINFORMATIVA />} />
           <Route path="/usuario" element={<FUSUARIO />} />
         </Routes>
