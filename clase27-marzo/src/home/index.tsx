@@ -15,6 +15,7 @@ function FHOME() {
   const [fotos, setFotos] = useState<Foto[]>([])
   const [busqueda, setBusqueda] = useState("")
   const [filtro, setFiltro] = useState("todas")
+  const [mensaje, setMensaje] = useState("")
   const navegar = useNavigate()
 
   useEffect(() => {
@@ -22,6 +23,20 @@ function FHOME() {
       .then(res => res.json())
       .then(data => setFotos(data))
   }, [])
+
+  function guardarFavorito(foto: Foto) {
+    const guardados = localStorage.getItem("favoritos")
+    const favoritos: Foto[] = guardados ? JSON.parse(guardados) : []
+    const yaExiste = favoritos.find((f) => f.id === foto.id)
+    if (yaExiste) {
+      setMensaje("Ya está en favoritos")
+    } else {
+      favoritos.push(foto)
+      localStorage.setItem("favoritos", JSON.stringify(favoritos))
+      setMensaje("Guardado en favoritos")
+    }
+    setTimeout(() => setMensaje(""), 2000)
+  }
 
   const fotosFiltradas = fotos.filter((foto) => {
     const coincideBusqueda = foto.author.toLowerCase().includes(busqueda.toLowerCase())
@@ -34,6 +49,8 @@ function FHOME() {
   return (
     <div className="home-container">
       <h2 className="home-titulo">Galería de Fotos</h2>
+
+      {mensaje && <p className="home-mensaje">{mensaje}</p>}
 
       <input
         className="home-buscador"
@@ -51,13 +68,19 @@ function FHOME() {
 
       <div className="home-grid">
         {fotosFiltradas.map((foto) => (
-          <div
-            key={foto.id}
-            className="home-card"
-            onClick={() => navegar(`/usuario?id=${foto.id}&autor=${foto.author}&ancho=${foto.width}&alto=${foto.height}`)}
-          >
-            <img src={`https://picsum.photos/id/${foto.id}/300/200`} alt={foto.author} />
+          <div key={foto.id} className="home-card">
+            <img
+              src={`https://picsum.photos/id/${foto.id}/300/200`}
+              alt={foto.author}
+              onClick={() => navegar(`/usuario?id=${foto.id}&autor=${foto.author}&ancho=${foto.width}&alto=${foto.height}`)}
+            />
             <p>{foto.author}</p>
+            <button
+              className="home-fav-btn"
+              onClick={() => guardarFavorito(foto)}
+            >
+              Guardar en favoritos
+            </button>
           </div>
         ))}
       </div>

@@ -1,0 +1,119 @@
+.info-container {
+  padding-bottom: 30px;
+}
+
+.info-hero {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.info-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);
+}
+
+.info-hero-titulo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 32px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.info-body {
+  padding: 20px;
+}
+
+.info-seccion {
+  margin-bottom: 28px;
+}
+
+.info-seccion h2 {
+  font-size: 18px;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #e94560;
+  padding-bottom: 6px;
+}
+
+.info-seccion p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.info-cards {
+  display: flex;
+  gap: 12px;
+}
+
+.info-card {
+  flex: 1;
+  background: #1a1a2e;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-numero {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e94560;
+}
+
+.info-label {
+  font-size: 11px;
+  color: #aaa;
+  text-align: center;
+}
+
+.info-endpoint {
+  background: #f5f5f5;
+  border-left: 4px solid #e94560;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+
+.info-endpoint span.info-metodo {
+  background: #e94560;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.info-endpoint code {
+  font-size: 13px;
+  color: #1a1a2e;
+}
+
+.info-endpoint p {
+  font-size: 12px;
+  color: #777;
+  margin-top: 4px;
+}
+
+.info-codigo {
+  background: #1a1a2e;
+  border-radius: 10px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.info-codigo pre {
+  color: #e94560;
+  font-size: 12px;
+  line-height: 1.6;
+}

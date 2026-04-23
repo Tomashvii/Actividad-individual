@@ -4,6 +4,7 @@ import FHOME from './home'
 import FFAVORITOS from './favoritos'
 import FINFORMATIVA from './informativa'
 import FUSUARIO from './usuario'
+import FORIGINAL from './original'
 import "./App.css"
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/splash" element={<FSPLASH />} />
           <Route path="/" element={<FHOME />} />
           <Route path="/favoritos" element={<FFAVORITOS />} />
+          <Route path="/original" element={<FORIGINAL />} />
           <Route path="/informativa" element={<FINFORMATIVA />} />
           <Route path="/usuario" element={<FUSUARIO />} />
         </Routes>
