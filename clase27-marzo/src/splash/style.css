@@ -1,0 +1,26 @@
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  background-color: #1a1a2e;
+  gap: 16px;
+}
+
+.splash-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid #e94560;
+}
+
+.splash-titulo {
+  color: white;
+  font-size: 32px;
+}
+
+.splash-sub {
+  color: #aaaaaa;
+  font-size: 16px;
+}

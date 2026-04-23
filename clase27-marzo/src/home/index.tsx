@@ -1,81 +1,66 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
+import "./style.css"
 
-interface Ranking {
-  rank: number
-  contestantName: string
-  points: number
-  matchesPlayed: number
+interface Foto {
+  id: string;
+  author: string;
+  width: number;
+  height: number;
+  url: string;
+  download_url: string;
 }
 
 function FHOME() {
-  const [ranking, setRanking] = useState<Ranking[]>([])
-  const [title, setTitle] = useState('')
+  const [fotos, setFotos] = useState<Foto[]>([])
+  const [busqueda, setBusqueda] = useState("")
+  const [filtro, setFiltro] = useState("todas")
+  const navegar = useNavigate()
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('https://raw.githubusercontent.com/sdtibata/dataliga/refs/heads/main/posiciones.json')
-        const data = await res.json()
-
-        setRanking(data.standings[0].ranking)
-        setTitle(data.standings[0].competitionName)
-      } catch (error) {
-        console.error('Error cargando datos:', error)
-      }
-    }
-//https://github.com/sdtibata/liga-react/blob/main/src/home/index.tsx --- IGNORE ---
-    fetchData()
+    fetch("https://picsum.photos/v2/list?limit=100")
+      .then(res => res.json())
+      .then(data => setFotos(data))
   }, [])
 
-  const equiposMap: Record<string, string> = {
-  "América de Cali SA": "america-de-cali",
-  "CA Bucaramanga": "atletico-bucaramanga",
-  "Club Atlético Nacional SA": "atletico-nacional",
-  "Club Deportes Tolima SA": "deportes-tolima",
-  "Asociación Deportivo Cali": "deportivo-cali",
-  "Deportivo Independiente Medellín": "independiente-medellin",
-  "Club Independiente Santa Fe": "independiente-santa-fe",
-  "CD Popular Junior FC SA": "junior",
-  "Millonarios FC": "millonarios",
-  "Once Caldas SA": "once-caldas",
+  const fotosFiltradas = fotos.filter((foto) => {
+    const coincideBusqueda = foto.author.toLowerCase().includes(busqueda.toLowerCase())
+    if (filtro === "todas") return coincideBusqueda
+    if (filtro === "horizontal") return coincideBusqueda && foto.width > foto.height
+    if (filtro === "vertical") return coincideBusqueda && foto.height > foto.width
+    return coincideBusqueda
+  })
 
-  "Internacional de Bogotá": "internacional-bogota",
-  "Club Llaneros SA": "llaneros",
-  "Águilas Doradas": "aguilas-doradas",
-  "Fortaleza FC": "fortaleza",
-  "Alianza FC": "alianza",
-  "Jaguares de Córdoba FC": "jaguares",
-  "Cúcuta Deportivo FC": "cucuta",
-  "Boyacá Chicó FC": "boyaca-chico",
-  "Deportivo Pereira FC": "pereira"
-};
-  
   return (
-    <div className="tabla-container">
-      <h2>{title}</h2>
-      <table className="tabla-posiciones">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Equipo</th>
-            <th>PJ</th>
-            <th>Pts</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ranking.map((equipo) => (
-            <tr key={equipo.rank}>
-              <td>{equipo.rank}</td>
-              <td> <Link to={`/equipo/${equiposMap[equipo.contestantName] || "default"}`}>
-                        {equipo.contestantName}
-                      </Link></td>
-              <td>{equipo.matchesPlayed}</td>
-              <td>{equipo.points}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="home-container">
+      <h2 className="home-titulo">Galería de Fotos</h2>
+
+      <input
+        className="home-buscador"
+        type="text"
+        placeholder="Buscar por autor..."
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+      />
+
+      <div className="home-filtros">
+        <button onClick={() => setFiltro("todas")} className={filtro === "todas" ? "filtro-activo" : ""}>Todas</button>
+        <button onClick={() => setFiltro("horizontal")} className={filtro === "horizontal" ? "filtro-activo" : ""}>Horizontal</button>
+        <button onClick={() => setFiltro("vertical")} className={filtro === "vertical" ? "filtro-activo" : ""}>Vertical</button>
+      </div>
+
+      <div className="home-grid">
+        {fotosFiltradas.map((foto) => (
+          <div
+            key={foto.id}
+            className="home-card"
+            onClick={() => navegar(`/usuario?id=${foto.id}&autor=${foto.author}&ancho=${foto.width}&alto=${foto.height}`)}
+          >
+            <img src={`https://picsum.photos/id/${foto.id}/300/200`} alt={foto.author} />
+            <p>{foto.author}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
