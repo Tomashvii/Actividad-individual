@@ -17,31 +17,22 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: |
-          cd clase27-marzo
-          npm install
+        run: cd clase27-marzo && npm install
 
       - name: Build web
-        run: |
-          cd clase27-marzo
-          npm run build
+        run: cd clase27-marzo && npm run build
 
       - name: Sync Capacitor
-        run: |
-          cd clase27-marzo
-          npx cap sync android
+        run: cd clase27-marzo && npx cap sync android
 
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: "17"
 
       - name: Build APK
-        run: |
-          cd clase27-marzo/android
-          chmod +x gradlew
-          ./gradlew assembleDebug
+        run: cd clase27-marzo/android && chmod +x gradlew && ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
